@@ -25,6 +25,14 @@ let UsersService = class UsersService {
         const user = this.repo.create({ email, password });
         return this.repo.save(user);
     }
+    findOne(id) {
+        return this.repo.findOne(id);
+    }
+    find(email) {
+        return this.repo.find({ email });
+    }
+    update() { }
+    remove() { }
 };
 UsersService = __decorate([
     (0, common_1.Injectable)(),
