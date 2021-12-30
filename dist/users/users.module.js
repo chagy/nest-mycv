@@ -13,13 +13,18 @@ const users_controller_1 = require("./users.controller");
 const users_service_1 = require("./users.service");
 const users_entity_1 = require("./users.entity");
 const auth_service_1 = require("./auth.service");
+const current_user_interceptor_1 = require("./interceptors/current-user.interceptor");
+const core_1 = require("@nestjs/core");
 let UsersModule = class UsersModule {
 };
 UsersModule = __decorate([
     (0, common_1.Module)({
         imports: [typeorm_1.TypeOrmModule.forFeature([users_entity_1.User])],
         controllers: [users_controller_1.UsersController],
-        providers: [users_service_1.UsersService, auth_service_1.AuthService]
+        providers: [users_service_1.UsersService, auth_service_1.AuthService, {
+                provide: core_1.APP_INTERCEPTOR,
+                useClass: current_user_interceptor_1.CurrentUserInterceptor
+            }]
     })
 ], UsersModule);
 exports.UsersModule = UsersModule;
