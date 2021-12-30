@@ -19,12 +19,14 @@ const users_service_1 = require("./users.service");
 const update_user_dto_1 = require("./dto/update-user.dto");
 const serialize_interceptor_1 = require("../interceptors/serialize.interceptor");
 const user_dto_1 = require("./dto/user.dto");
+const auth_service_1 = require("./auth.service");
 let UsersController = class UsersController {
-    constructor(usersService) {
+    constructor(usersService, authService) {
         this.usersService = usersService;
+        this.authService = authService;
     }
     createUser(body) {
-        this.usersService.create(body.email, body.password);
+        return this.authService.signup(body.email, body.password);
     }
     async findUser(id) {
         console.log('handler running');
@@ -83,7 +85,7 @@ __decorate([
 UsersController = __decorate([
     (0, common_1.Controller)('auth'),
     (0, serialize_interceptor_1.Serialize)(user_dto_1.UserDto),
-    __metadata("design:paramtypes", [users_service_1.UsersService])
+    __metadata("design:paramtypes", [users_service_1.UsersService, auth_service_1.AuthService])
 ], UsersController);
 exports.UsersController = UsersController;
 //# sourceMappingURL=users.controller.js.map

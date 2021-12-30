@@ -1,10 +1,12 @@
 import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService } from './users.service';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { AuthService } from './auth.service';
 export declare class UsersController {
     private usersService;
-    constructor(usersService: UsersService);
-    createUser(body: CreateUserDto): void;
+    private authService;
+    constructor(usersService: UsersService, authService: AuthService);
+    createUser(body: CreateUserDto): Promise<import("./users.entity").User>;
     findUser(id: string): Promise<import("./users.entity").User>;
     findAllUsers(email: string): Promise<import("./users.entity").User[]>;
     removeUser(id: string): Promise<import("./users.entity").User>;
