@@ -17,6 +17,8 @@ const common_1 = require("@nestjs/common");
 const create_user_dto_1 = require("./dto/create-user.dto");
 const users_service_1 = require("./users.service");
 const update_user_dto_1 = require("./dto/update-user.dto");
+const serialize_interceptor_1 = require("../interceptors/serialize.interceptor");
+const user_dto_1 = require("./dto/user.dto");
 let UsersController = class UsersController {
     constructor(usersService) {
         this.usersService = usersService;
@@ -25,6 +27,7 @@ let UsersController = class UsersController {
         this.usersService.create(body.email, body.password);
     }
     async findUser(id) {
+        console.log('handler running');
         const user = await this.usersService.findOne(parseInt(id));
         if (!user) {
             throw new common_1.NotFoundException('user not found!');
@@ -79,6 +82,7 @@ __decorate([
 ], UsersController.prototype, "updateUser", null);
 UsersController = __decorate([
     (0, common_1.Controller)('auth'),
+    (0, serialize_interceptor_1.Serialize)(user_dto_1.UserDto),
     __metadata("design:paramtypes", [users_service_1.UsersService])
 ], UsersController);
 exports.UsersController = UsersController;
