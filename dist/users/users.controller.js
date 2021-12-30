@@ -28,6 +28,9 @@ let UsersController = class UsersController {
     whoAmI(session) {
         return this.usersService.findOne(session.userId);
     }
+    signOut(session) {
+        session.userId = null;
+    }
     async createUser(body, session) {
         const user = await this.authService.signup(body.email, body.password);
         session.userId = user.id;
@@ -63,6 +66,13 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "whoAmI", null);
+__decorate([
+    (0, common_1.Post)('/signout'),
+    __param(0, (0, common_1.Session)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], UsersController.prototype, "signOut", null);
 __decorate([
     (0, common_1.Post)('/signup'),
     __param(0, (0, common_1.Body)()),
