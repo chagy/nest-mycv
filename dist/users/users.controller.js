@@ -25,17 +25,15 @@ let UsersController = class UsersController {
         this.usersService = usersService;
         this.authService = authService;
     }
-    setColor(color, session) {
-        session.color = color;
+    async createUser(body, session) {
+        const user = await this.authService.signup(body.email, body.password);
+        session.userId = user.id;
+        return user;
     }
-    getColor(session) {
-        return session.color;
-    }
-    createUser(body) {
-        return this.authService.signup(body.email, body.password);
-    }
-    signin(body) {
-        return this.authService.signin(body.email, body.password);
+    async signin(body, session) {
+        const user = await this.authService.signin(body.email, body.password);
+        session.userId = user.id;
+        return user;
     }
     async findUser(id) {
         console.log('handler running');
@@ -56,33 +54,20 @@ let UsersController = class UsersController {
     }
 };
 __decorate([
-    (0, common_1.Get)('/colors/:color'),
-    __param(0, (0, common_1.Param)('color')),
-    __param(1, (0, common_1.Session)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object]),
-    __metadata("design:returntype", void 0)
-], UsersController.prototype, "setColor", null);
-__decorate([
-    (0, common_1.Get)('/colors'),
-    __param(0, (0, common_1.Session)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
-], UsersController.prototype, "getColor", null);
-__decorate([
     (0, common_1.Post)('/signup'),
     __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Session)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_user_dto_1.CreateUserDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:paramtypes", [create_user_dto_1.CreateUserDto, Object]),
+    __metadata("design:returntype", Promise)
 ], UsersController.prototype, "createUser", null);
 __decorate([
     (0, common_1.Post)('/signin'),
     __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Session)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_user_dto_1.CreateUserDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:paramtypes", [create_user_dto_1.CreateUserDto, Object]),
+    __metadata("design:returntype", Promise)
 ], UsersController.prototype, "signin", null);
 __decorate([
     (0, common_1.Get)('/:id'),
