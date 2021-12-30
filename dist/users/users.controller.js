@@ -25,6 +25,9 @@ let UsersController = class UsersController {
         this.usersService = usersService;
         this.authService = authService;
     }
+    whoAmI(session) {
+        return this.usersService.findOne(session.userId);
+    }
     async createUser(body, session) {
         const user = await this.authService.signup(body.email, body.password);
         session.userId = user.id;
@@ -53,6 +56,13 @@ let UsersController = class UsersController {
         return this.usersService.update(parseInt(id), body);
     }
 };
+__decorate([
+    (0, common_1.Get)('/whoami'),
+    __param(0, (0, common_1.Session)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], UsersController.prototype, "whoAmI", null);
 __decorate([
     (0, common_1.Post)('/signup'),
     __param(0, (0, common_1.Body)()),

@@ -7,6 +7,9 @@ Content-Type: application/json
     "password" : "12345678"
 }
 
+### Who am I
+GET http://localhost:3000/auth/whoami
+
 ### Signin user
 POST http://localhost:3000/auth/signin
 Content-Type: application/json
