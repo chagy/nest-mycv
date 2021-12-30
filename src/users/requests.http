@@ -33,3 +33,9 @@ Content-Type: application/json
     "email" :"chagy2@mail.com",
     "password" : "87654321"
 }
+
+### Set Color
+GET http://localhost:3000/auth/colors/red
+
+### Get Color
+GET http:://localhost:3000/auth/colors
