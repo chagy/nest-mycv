@@ -22,7 +22,7 @@ let AuthService = class AuthService {
     async signup(email, password) {
         const users = await this.usersService.find(email);
         if (users.length) {
-            throw new common_1.BadRequestException("email in use");
+            throw new common_1.BadRequestException('email in use');
         }
         const salt = (0, crypto_1.randomBytes)(8).toString('hex');
         const hash = (await scrypt(password, salt, 32));

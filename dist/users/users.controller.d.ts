@@ -1,6 +1,6 @@
 import { CreateUserDto } from './dto/create-user.dto';
-import { UsersService } from './users.service';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { UsersService } from './users.service';
 import { AuthService } from './auth.service';
 import { User } from './users.entity';
 export declare class UsersController {

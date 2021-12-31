@@ -15,25 +15,40 @@ const reports_module_1 = require("./reports/reports.module");
 const typeorm_1 = require("@nestjs/typeorm");
 const users_entity_1 = require("./users/users.entity");
 const reports_entity_1 = require("./reports/reports.entity");
+const core_1 = require("@nestjs/core");
+const config_1 = require("@nestjs/config");
+const cookieSession = require('cookie-session');
 let AppModule = class AppModule {
+    configure(consumer) {
+        consumer
+            .apply(cookieSession({
+            keys: ['asdfasfd'],
+        })).forRoutes('*');
+    }
 };
 AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            typeorm_1.TypeOrmModule.forRoot({
-                type: 'sqlite',
-                database: 'db.sqlite',
-                entities: [
-                    users_entity_1.User,
-                    reports_entity_1.Report,
-                ],
-                synchronize: true,
+            config_1.ConfigModule.forRoot({
+                isGlobal: true,
+                envFilePath: `.env.${process.env.NODE_ENV}`
+            }),
+            typeorm_1.TypeOrmModule.forRootAsync({
+                inject: [config_1.ConfigService],
+                useFactory: (config) => {
+                    return {
+                        type: 'sqlite',
+                        database: config.get('DB_NAME'),
+                        synchronize: true,
+                        entities: [users_entity_1.User, reports_entity_1.Report]
+                    };
+                }
             }),
             users_module_1.UsersModule,
             reports_module_1.ReportsModule,
         ],
         controllers: [app_controller_1.AppController],
-        providers: [app_service_1.AppService],
+        providers: [app_service_1.AppService, { provide: core_1.APP_PIPE, useValue: new common_1.ValidationPipe({ whitelist: true, }) }],
     })
 ], AppModule);
 exports.AppModule = AppModule;

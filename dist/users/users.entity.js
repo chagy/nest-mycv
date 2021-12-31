@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 const typeorm_1 = require("typeorm");
 const class_transformer_1 = require("class-transformer");
+const reports_entity_1 = require("../reports/reports.entity");
 let User = class User {
     logInsert() {
         console.log('Inserted User with id', this.id);
@@ -36,6 +37,10 @@ __decorate([
     (0, class_transformer_1.Exclude)(),
     __metadata("design:type", String)
 ], User.prototype, "password", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => reports_entity_1.Report, (report) => report.user),
+    __metadata("design:type", Array)
+], User.prototype, "reports", void 0);
 __decorate([
     (0, typeorm_1.AfterInsert)(),
     __metadata("design:type", Function),
