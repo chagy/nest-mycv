@@ -22,6 +22,7 @@ const user_dto_1 = require("./dto/user.dto");
 const auth_service_1 = require("./auth.service");
 const current_user_decorator_1 = require("./decorators/current-user.decorator");
 const users_entity_1 = require("./users.entity");
+const auth_guard_1 = require("../guards/auth.guard");
 let UsersController = class UsersController {
     constructor(usersService, authService) {
         this.usersService = usersService;
@@ -63,6 +64,7 @@ let UsersController = class UsersController {
 };
 __decorate([
     (0, common_1.Get)('whoami'),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     __param(0, (0, current_user_decorator_1.CurrentUser)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [users_entity_1.User]),
